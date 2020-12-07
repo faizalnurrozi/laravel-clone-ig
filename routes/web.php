@@ -21,8 +21,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     })->name('/');
 
-    Route::get('/new-post', [UploadPost::class, 'index'])->name('/new-post');
-    Route::get('/new-post-caption', [UploadPost::class, 'indexCaption'])->name('/new-post-caption');
+    Route::get('/new-post', [UploadImage::class, 'index'])->name('/new-post');
+    Route::get('/new-post-caption', [UploadPost::class, 'index'])->name('/new-post-caption');
     
     /* Route::get('/new-post', function () {
         return view('new-post');

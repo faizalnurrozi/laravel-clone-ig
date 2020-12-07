@@ -24,22 +24,8 @@ class UploadPost extends Component
         
         return ($post > 0) ? true : false;
     }
-    
+
     public function index(){
-        
-        if(!$this->isStateOpen()){
-
-            return view('livewire.new-post');
-
-        }else{
-        
-            return Redirect::to('new-post-caption')->send();
-
-        }
-
-    }
-
-    public function indexCaption(){
 
         if($this->isStateOpen()){
 
@@ -55,53 +41,8 @@ class UploadPost extends Component
 
     public function render()
     {
-        return view('livewire.upload-image');
+        return view('livewire.upload-post');
     }
 
-    public function save()
-    {
 
-        /**
-         * Validate photos
-         */
-
-        $validatedData = $this->validate([
-            'photos.*' => 'required|image|mimes:jpeg,png,svg,jpg,gif|max:1024',
-        ]);
-        
-
-        /**
-         * Create new Post
-         */
-
-        $post = new Post();
-        $post->user_id = Auth::id(); 
-        $post->state = 'OPEN';
-        $post->save();
-        
-
-        /**
-         * Get photos and store to DB and Storage
-         */
-        foreach ($this->photos as $photo) {
-
-            /**
-             * Store on Storage
-             */
-
-            $image = $photo->store('photos', 'public');
-
-            /**
-             * Store on Database
-             */
-
-            $postDetail = new PostDetail();
-            $postDetail->post()->associate($post);
-            $postDetail->image = $image;
-            $postDetail->save();
-
-        }
-
-        return redirect()->to('/new-post');
-    }
 }
